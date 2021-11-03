@@ -12,9 +12,12 @@ public class Tutorial : MonoBehaviour
     public InputField InputTxt;
     public GameObject NameBox;
 
+    Animator playerAnim;
+
     protected GameObject canvas;
     protected GameObject DialogBox;
     protected Talk talkScript;
+
 
     private bool getName = false;
 
@@ -32,6 +35,11 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private GameObject npcInstructor;
     [SerializeField] private GameObject npcStaff;
     [SerializeField] private GameObject nosilyBallon;
+    [SerializeField] private Camera cam;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject trainee;
+    [SerializeField] private GameObject hyunjun;
+    [SerializeField] private GameObject partLeader;
 
     public string name = "";
 
@@ -49,6 +57,8 @@ public class Tutorial : MonoBehaviour
         canvas = GameObject.Find("Canvas");
         DialogBox = canvas.transform.Find("DialogBox").gameObject;
         talkScript = DialogBox.GetComponent<Talk>();
+        playerAnim = player.GetComponent<Animator>();
+
         //fadeoutColor = fadeout.GetComponent<Image>().color;
         
         // //Test
@@ -121,9 +131,10 @@ public class Tutorial : MonoBehaviour
                 // 교관 NPC에게 2초 동안 카메라 확대
                 // 카메라 원위치
 
-                // 대화창 비활성화
+                // 스킵버튼 비활성화
+                //skipBtn.SetActive(false);
                 // 교관 NPC 머리 위에 말풍선 띄우기
-                // 클릭 시 대화창 활성화
+                // 클릭 시 스킵버튼 활성화
                  break;
             case 33:
                 // 훈련 목록 UI 출력, 훈련 UI 외 딤 처리
@@ -132,8 +143,10 @@ public class Tutorial : MonoBehaviour
                 break;
             case 34:
                 // 교관 앞에서 일반공격 제스처 출력 후 인사
+                playerAnim.SetBool("isAttack", true);
                 break;
             case 35:
+                playerAnim.SetBool("isAttack", false);
                 // 훈련 애니메이션
                 break;
             case 39:
@@ -144,7 +157,7 @@ public class Tutorial : MonoBehaviour
                 // 세종 헌터 건물 내
                 break;
             case 41:
-                npcStaff.SetActive(false);
+                npcStaff.SetActive(true);
                 // 헌터협회 사원 강조
                 break;
             case 42:
@@ -159,10 +172,15 @@ public class Tutorial : MonoBehaviour
                 // 대결 상대 배치 중
                 // 여러명이 파트장 앞에 서 있음
                 // 주인공은 훈련병들 중간에 위치함
+                if(!trainee.activeInHierarchy)
+                    trainee.SetActive(true);
                 break;
             case 47:
                 // 대전 상대 발표
                 // 신현준 등장
+                trainee.SetActive(false);
+                if(!hyunjun.activeInHierarchy)
+                    hyunjun.SetActive(true);
                 break;
             case 53:
                 // 주인공 시선 바닥
@@ -175,9 +193,12 @@ public class Tutorial : MonoBehaviour
                 // 전투
                 break;
             case 59:
+                if(!partLeader.activeInHierarchy)
+                    partLeader.SetActive(true);
                 // 파트장 NPC가 주인공에게 무기 던지는 애니메이션
                 break;
             case 61:
+                partLeader.SetActive(false);
                 // 인벤토리 활성화 될 때까지 기다리기
                 // 무기를 칸 안으로 이동시킬 때까지 기다리기
                 // 닫을 때까지 기다리기
@@ -197,14 +218,22 @@ public class Tutorial : MonoBehaviour
                 // 신현준 스킬 사용 : 안보이는 팔을 앞으로 내밀어 주인공 당긴 후 어퍼 사용
                 // 주인공 날아가면서 기절 이 때 신현준은 여전히 어퍼컷 포즈 (마비노기 스크류어퍼 참고)
                 // 시합 끝나는 소리
+                if(!triggerOn)
+                {
+                    triggerOn = !triggerOn;
+                    playerAnim.SetTrigger("isKO");
+                }
                 break;
             case 67:
                 // 대화창 활성화
                 // 스크립트 진행
                 // 주인공은 누워있는 상태로 신현준 퇴장
+                hyunjun.SetActive(false);
                 break;
             case 70:
                 // 안내 표시
+                if(!arrow.activeInHierarchy)
+                    arrow.SetActive(true);
                 break;
             case 71:
                 // 임무 완료 UI 출력
@@ -213,6 +242,8 @@ public class Tutorial : MonoBehaviour
             case 72:
                 //Move(세종헌터건물내);
                 // 헌터협회 사원 NPC 활성화
+                if(!npcStaff.activeInHierarchy)
+                    npcStaff.SetActive(true);
                 break;
             case 83:
                 //안내원 인력사무소로 이동 // NPC 화면 밖으로 페이드아웃 // 안내 표시 출력
