@@ -75,7 +75,7 @@ public class Slot : MonoBehaviour,
     {
         if (shopSlot) return;
         isPressed = true;
-        SelectedSlot.Instance.SetSelectedItem(playerItem);
+        SelectedSlot.Instance.SetItem(playerItem);
         StartCoroutine(PressCoroutine(eventData));
         //Debug.Log("OnPointerDown");
     }
@@ -103,9 +103,16 @@ public class Slot : MonoBehaviour,
     public void OnPointerClick(PointerEventData eventData)
     {
         isPressed = false;
+
+        if (playerItem != null)
+        {
+            SelectedSlot.Instance.SetSelectedItem(playerItem);
+            SelectedSlot.Instance.isSelected = true;
+        }
+
         // 해당 슬롯에 소비아이템이 있을 경우 사용 팝업 띄우기
         //Debug.Log("OnPointerClick");
-        
+
         // 상점 인벤슬롯인 경우 상세정보 띄우기
         if (shopSlot)
         {
@@ -166,7 +173,7 @@ public class Slot : MonoBehaviour,
                 else FosterManager.Instance.GetPlayerData().AddInvenItem(afterPlayerItem, slotIndex);
             }
         }
-        PlayerInfoPopup.Instance.setInfo();
+        FosterManager.Instance.SetChangeFlag(true);
         UIManager_Area.Instance.SetSkills();
         itemImage.enabled = true;
         //if(playerItem != null && playerItem.item_name!="none") itemEach.SetActive(DataManager.Instance.GetItemData(playerItem.item_name).type == "consumable");
@@ -248,7 +255,7 @@ public class Slot : MonoBehaviour,
         }
 
         // 해당 슬롯과 상대 슬롯의 invenItem 객체를 교환
-        SelectedSlot.Instance.SetSelectedItem(playerItem);
+        SelectedSlot.Instance.SetItem(playerItem);
 
         //Debug.Log("OnDrop");
     }

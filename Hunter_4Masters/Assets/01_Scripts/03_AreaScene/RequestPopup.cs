@@ -83,7 +83,7 @@ public class RequestPopup : MonoBehaviour
         SetRequest(Const.requestNum, req);
         reqDesc.text = req.detail;
         reqCSP.text = DataManager.Instance.GetRequestCost(CostType.SP, req.map).ToString();
-        reqCTime.text = StatConverter.GetEstimatedTime(DataManager.Instance.GetRequestCost(CostType.TIME, req.map));
+        reqCTime.text = TextFormatter.GetEstimatedTime(DataManager.Instance.GetRequestCost(CostType.TIME, req.map));
     }
 
     // 출정
@@ -135,7 +135,7 @@ public class RequestPopup : MonoBehaviour
         reqName[i].text = req.name;
         reqRank[i].sprite = DataManager.Instance.GetSprite("icons", "rank_"+req.rank);
         reqType[i].sprite = DataManager.Instance.GetSprite("request", Const.requestType[req.clear_condition]);
-        rewardMoney[i].text = StatConverter.GetMoney(req.reward_money);
+        rewardMoney[i].text = TextFormatter.GetMoney(req.reward_money);
         rewardItem[i].gameObject.SetActive(false);
         if (req.reward_item.Length > 0)
         {

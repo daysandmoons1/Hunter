@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Popup : MonoBehaviour
 {
+    [SerializeField] public GameObject playerInfoPopupTest;
+
     [SerializeField] private GameObject selectPanel, hospitalPanel, shopPanel, requestPanel, awakeningPanel;
     private SelectionPopup selectionPopup;
     private RectTransform selectionPopupRT, hospitalPopupRT;
@@ -17,6 +19,18 @@ public class Popup : MonoBehaviour
         selectionPopup = selectPanel.GetComponent<SelectionPopup>();
         selectionPopupRT = selectPanel.transform.GetChild(0).GetComponent<RectTransform>();
         hospitalPopupRT = hospitalPanel.transform.GetChild(0).GetComponent<RectTransform>();
+    }
+
+    public void OpenPlayerInfo()
+    {
+        GameManager.Instance.Pause();
+        playerInfoPopupTest.SetActive(true);
+    }
+
+    public void ClosePlayerInfo()
+    {
+        playerInfoPopupTest.SetActive(false);
+        GameManager.Instance.Resume();
     }
 
     public SelectionPopup GetSelectionPopup()

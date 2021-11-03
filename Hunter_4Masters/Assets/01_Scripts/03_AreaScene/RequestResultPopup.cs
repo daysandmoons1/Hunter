@@ -77,7 +77,7 @@ public class RequestResultPopup : MonoBehaviour, IPointerClickHandler
 
         resultRank.text = "랭크 " + ((playerRank[0] == playerRank[1])? "유지" : "상승");
 
-        rewardMoneyTxt.text = StatConverter.GetMoney(req.reward_money);
+        rewardMoneyTxt.text = TextFormatter.GetMoney(req.reward_money);
 
         if (req.reward_item.Length == 0) itemZero.enabled = true;
         else

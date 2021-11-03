@@ -69,34 +69,33 @@ public class PlayerData : ICloneable
                 if (itemData.effect[j].effect_variable == key) effectValue += itemData.effect[j].GetMinValue();
             }
         }
-        return Stats[key].name + ": " + Stats[key].cur_point +
-            "[" + (Stats[key].cur_point-effectValue) + "(/" + Stats[key].max_point + ")" +
-            string.Format("{0:+0;-0}", effectValue) + "]";
+        return TextFormatter.DefStatFormat(Stats[key].name, Stats[key].cur_point, Stats[key].max_point, effectValue);
     }
 
     public string GetBatStat()
     {
-        string[] stats = new string[3];
+        string[] names = new string[3];
+        float[] points = new float[3];
 
-        for(int i=0; i<stats.Length; i++)
+        for(int i=0; i<3; i++)
         {
-            if (i == 1) stats[i] = Stats[Const.batStats[i]].name + " " + Stats[Const.batStats[i]].cur_point.ToString("F2");
-            else stats[i] = Stats[Const.batStats[i]].name + " " + Stats[Const.batStats[i]].cur_point;
+            names[i] = Stats[Const.batStats[i]].name;
+            points[i] = Stats[Const.batStats[i]].cur_point;
         }
 
-        return string.Format("{0, -5} {1, -5} {2, -5}", stats[0], stats[1], stats[2]);
+        return TextFormatter.BatStatFormat(names, points);
     }
 
     public string GetStateOutOfMax(string key)
     {
-        if (Stats.ContainsKey(key)) return Stats[key].cur_point + "/" + Stats[key].max_point;
-        else if (Cons.n_Cons.ContainsKey(key)) return Cons.n_Cons[key].cur_point + "/" + Cons.n_Cons[key].max_point;
+        if (Stats.ContainsKey(key)) return TextFormatter.AOutOfB(Stats[key].cur_point,Stats[key].max_point);
+        else if (Cons.n_Cons.ContainsKey(key)) return TextFormatter.AOutOfB(Cons.n_Cons[key].cur_point, Cons.n_Cons[key].max_point);
         else throw new NullReferenceException();
     }
 
     public string GetMoney()
     {
-        return StatConverter.GetMoney(Mon_Inven.Money);
+        return TextFormatter.GetMoney(Mon_Inven.Money);
     }
 
     public PlayerItem GetItemByIndex(int slotIndex)
@@ -106,6 +105,11 @@ public class PlayerData : ICloneable
             if (Mon_Inven.Inven[i].inven_index == slotIndex) return Mon_Inven.Inven[i];
         }
         return null;
+    }
+
+    public List<EquipItem> GetAllEquipItems()
+    {
+        return Mon_Inven.Equipment;
     }
 
     #endregion public Get() functions ===========================================================================================================
@@ -154,7 +158,7 @@ public class PlayerData : ICloneable
                     if (Mon_Inven.Inven[i].item_index == item.data_ID &&
                         Mon_Inven.Inven[i].item_each < ((Potion)DataManager.Instance.GetItemData(Mon_Inven.Inven[i])).max_capacity)
                     {
-                        index = i;
+                        index = Mon_Inven.Inven[i].inven_index;
                     }
                 }
 
@@ -414,7 +418,7 @@ public class InvenItem : PlayerItem, ICloneable
 public class PlayerItem : ICloneable
 {
     public string item_name;
-    public int item_each;
+    public int item_each = -1;
     public int item_index;
 
     public PlayerItem()
@@ -440,6 +444,7 @@ public class FosterManager : Singleton<FosterManager>
 
     private PlayerData playerData;
     private int awakeningCnt = 1;
+    private bool changeFlag = false;
 
     public override void Awake()
     {
@@ -472,5 +477,16 @@ public class FosterManager : Singleton<FosterManager>
     public void SetPlayerData(PlayerData pd)
     {
         playerData = pd;
+    }
+
+    public bool GetChangeFlag()
+    {
+        return changeFlag;
+    }
+
+    // 플레이어 데이터 변경/적용 시 플래그 세팅(UI 갱신 필요 여부 확인)
+    public void SetChangeFlag(bool flag)
+    {
+        changeFlag = flag;
     }
 }

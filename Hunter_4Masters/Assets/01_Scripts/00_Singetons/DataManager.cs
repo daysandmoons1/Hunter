@@ -23,6 +23,7 @@ public static class Const
     public const string defStr = "none";
     public const string defStr2 = "null";  // 통일해야 될듯
 
+    public static readonly string[] state = { "HP", "SP", "WILL" };
     public const string hp = "HP";
     public const string sp = "SP";
     public const string will = "WILL";

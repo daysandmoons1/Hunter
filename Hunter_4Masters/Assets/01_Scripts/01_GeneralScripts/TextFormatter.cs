@@ -2,23 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class StatConverter
+public static class TextFormatter
 {
-    //public static string GetBasicType(string statName, float value)
-    //{
-    //    string res="";
-
-    //    return res;
-    //}
-
-    //// ex) 350.0 -> "+6시간 50분"
-    //public static string GetEstimatedType(string statName, float value)
-    //{
-    //    string res="";
-
-    //    return res;
-    //}
-
     // ex) 15 -> "D-15"
     public static string GetBasicDDay(float value)
     {
@@ -52,5 +37,28 @@ public static class StatConverter
     public static string GetMoney(float value)
     {
         return string.Format("{0:#,##0}", (int)value) + "$";
+    }
+
+    public static string DefStatFormat(string name, float cur, float max, float effect)
+    {
+        return name + ": " + cur + "  [" + (cur - effect) + "(/" + max + ")" + string.Format("{0:+0;-0}", effect) + "]";
+    }
+
+    public static string BatStatFormat(string[] names, float[] curPoints)
+    {
+        string[] stats = new string[3];
+
+        for (int i = 0; i < stats.Length; i++)
+        {
+            if (i == 1) stats[i] = names[i] + ":" + string.Format("{0,7}", curPoints[i].ToString("F2"));
+            else stats[i] = names[i] + ":" + string.Format("{0,7}", curPoints[i]);
+        }
+
+        return stats[0]+"\n"+stats[1]+"\n"+stats[2];
+    }
+
+    public static string AOutOfB(float a, float b)
+    {
+        return a+"/"+b;
     }
 }

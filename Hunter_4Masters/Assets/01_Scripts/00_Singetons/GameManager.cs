@@ -71,12 +71,12 @@ public class GameManager : Singleton<GameManager>
 
     public string GetDDay()
     {
-        return StatConverter.GetBasicDDay(d_day);
+        return TextFormatter.GetBasicDDay(d_day);
     }
 
     public string GetCurrentTimeByValue()
     {
-        return StatConverter.GetBasicTime(curTimeVal);
+        return TextFormatter.GetBasicTime(curTimeVal);
     }
 
     public void Pause()

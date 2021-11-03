@@ -57,12 +57,12 @@ public class ResultPopup : MonoBehaviour
         {
             target = current + GameManager.Instance.tempSpendTime;
             StartCoroutine(NumCoroutine(statName, target, current));
-            deltaTxt.text = StatConverter.GetEstimatedTime(current - target);
+            deltaTxt.text = TextFormatter.GetEstimatedTime(current - target);
         }
         else if (statName == Const.money)
         {
             StartCoroutine(NumCoroutine(statName, target, current));
-            deltaTxt.text = StatConverter.GetMoney(target - current);
+            deltaTxt.text = TextFormatter.GetMoney(target - current);
         }
         else
         {
@@ -115,8 +115,8 @@ public class ResultPopup : MonoBehaviour
         Text textBox = Stats[statName].transform.Find("Gauge").GetComponent<Text>();
         textBox.text = current.ToString();
 
-        if (statName == Const.time) textBox.text = StatConverter.GetBasicTime((int)(1440 - current % 1440) % 1440);
-        else if (statName == Const.money) textBox.text = StatConverter.GetMoney(current);
+        if (statName == Const.time) textBox.text = TextFormatter.GetBasicTime((int)(1440 - current % 1440) % 1440);
+        else if (statName == Const.money) textBox.text = TextFormatter.GetMoney(current);
 
         yield return new WaitForSeconds(2);
 
@@ -129,8 +129,8 @@ public class ResultPopup : MonoBehaviour
                 if (current < target) { current = target; }
                 int tmp = (int)current;
                 textBox.text = tmp.ToString();
-                if(statName==Const.time) textBox.text = StatConverter.GetBasicTime((int)(1440 - current % 1440) % 1440);
-                else if (statName == Const.money) textBox.text = StatConverter.GetMoney(current);
+                if(statName==Const.time) textBox.text = TextFormatter.GetBasicTime((int)(1440 - current % 1440) % 1440);
+                else if (statName == Const.money) textBox.text = TextFormatter.GetMoney(current);
                 yield return null;
             }
         }

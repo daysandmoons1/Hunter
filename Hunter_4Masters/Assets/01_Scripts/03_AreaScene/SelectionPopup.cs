@@ -103,11 +103,11 @@ public class SelectionPopup : MonoBehaviour
             {
                 case Const.money:
                     SetOptionTitle(Const.money,index,i);
-                    optionContents[index,i].text = StatConverter.GetMoney(pair.Value.consume[i].consume_value);
+                    optionContents[index,i].text = TextFormatter.GetMoney(pair.Value.consume[i].consume_value);
                     break;
                 case Const.time:
                     SetOptionTitle(Const.time, index, i);
-                    optionContents[index, i].text = StatConverter.GetEstimatedTime(pair.Value.consume[i].consume_value);
+                    optionContents[index, i].text = TextFormatter.GetEstimatedTime(pair.Value.consume[i].consume_value);
                     break;
                 default:
                     SetOptionTitle(title.consume[i].consume_variable, index, i);

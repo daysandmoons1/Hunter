@@ -180,8 +180,8 @@ public class Hospital : MonoBehaviour
                     int index = i;
                     scHealBtn[i].onClick.AddListener(()=> Heal(HospitalType.SpCon, index));
                     scIcon[i].sprite = DataManager.Instance.GetSprite("icons", pd.Cons.ETC[i].name);
-                    scHealCost[i].text = StatConverter.GetMoney(h.cost_money);
-                    scHealTime[i].text = StatConverter.GetEstimatedTime(h.cost_time);
+                    scHealCost[i].text = TextFormatter.GetMoney(h.cost_money);
+                    scHealTime[i].text = TextFormatter.GetEstimatedTime(h.cost_time);
                 }
             }
         }
@@ -202,8 +202,8 @@ public class Hospital : MonoBehaviour
             int index = i;
             hpHealBtn[i].onClick.AddListener(() => Heal(HospitalType.HP, index));
             hpHealPercent[i].text = h.healPercent + "%";
-            hpHealCost[i].text = StatConverter.GetMoney(h.cost_money);
-            hpHealTime[i].text = StatConverter.GetEstimatedTime(h.cost_time);
+            hpHealCost[i].text = TextFormatter.GetMoney(h.cost_money);
+            hpHealTime[i].text = TextFormatter.GetEstimatedTime(h.cost_time);
             i++;
         }
         foreach (OtherHospitalData h in ohdl[1])
@@ -217,8 +217,8 @@ public class Hospital : MonoBehaviour
             int index = i;
             willHealBtn[i].onClick.AddListener(() => Heal(HospitalType.WILL, index));
             willHealPercent[i].text = h.healPercent + "%";
-            willHealCost[i].text = StatConverter.GetMoney(h.cost_time);
-            willHealTime[i].text = StatConverter.GetEstimatedTime(h.cost_time);
+            willHealCost[i].text = TextFormatter.GetMoney(h.cost_time);
+            willHealTime[i].text = TextFormatter.GetEstimatedTime(h.cost_time);
             i++;
         }
     }

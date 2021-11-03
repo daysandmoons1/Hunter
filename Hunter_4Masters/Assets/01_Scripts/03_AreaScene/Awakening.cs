@@ -77,7 +77,7 @@ public class Awakening : MonoBehaviour
             awakeDescTxt[i].text = "최대치 " + (pd.GetStatMax(Const.defStats[i]) + awakePlus[i, 0])+" ~ "+
                                                (pd.GetStatMax(Const.defStats[i]) + awakePlus[i, 3]);
         }
-        costMoneyTxt.text = StatConverter.GetMoney(costMoney);
+        costMoneyTxt.text = TextFormatter.GetMoney(costMoney);
     }
 
     // 각성 실행
