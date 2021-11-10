@@ -35,28 +35,15 @@ public class TestSlime : MonoBehaviour
         DetectPlayer();
     }
 
-    // void OnDrawGizmos()
-    // {
-    //     RaycastHit2D raycastHit = Physics2D.BoxCast(tr.position, boxCastSize, 0f, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
-        
-    //     Gizmos.color = Color.green;
-    //     if (raycastHit.collider != null)
-    //     {
-    //         Gizmos.DrawRay(transform.position, Vector2.down * raycastHit.distance);
-    //         Gizmos.DrawWireCube(transform.position + Vector3.down * raycastHit.distance, boxCastSize);
-    //     }
-    //     else
-    //     {
-    //         Gizmos.DrawRay(transform.position, Vector2.down * raycastHit.distance);
-    //     }
-    // }
-
     private void Move()
     {
         curPos = tr.position.y;
 
         // nextMove¶û flip ¸ÂÃç¾ßµÊ
-        // sr.flipX = nextMove != 1;
+        if(nextMove == 1)
+            sr.flipX = true;
+        else
+            sr.flipX = false;
 
         // move
         rigid.velocity = new Vector2(nextMove, rigid.velocity.y);
